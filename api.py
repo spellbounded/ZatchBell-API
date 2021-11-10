@@ -43,19 +43,12 @@ def api_all():
 
 @app.route('/api/v1/resources/cards', methods=['GET'])
 def api_id():
-        # check if an ID was provided as part of the URL
-        # If ID is provided, assign it to a variable
-        # If no ID is proivded, display an error in the browser
         if 'id' in request.args:
                 id = request.args['id']
         else:
                 return "Error. No id field provided. Please specify an id."
 
-        # Create an empty list for our results
         results = []
-
-        # Loop through the data and match results that fit the requested ID
-        # IDs are unique, but other fields might return many results
         for card in cards:
                 if card['id'] == id:
                         results.append(card)
