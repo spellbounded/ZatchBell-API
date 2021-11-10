@@ -27,7 +27,7 @@ cards = [
         'description':'[1MP] Neither player can send their in-play PARTNER cards to the Discard Pile during this tur>        'type': 'Mamodo',
         'turn': None
         'Set': 'Dawn of the Ancients',
-        'image': 'img\M-107 - Laila {Bounds of Partnership}'
+        'image': 'img\M-107 - Laila {Bounds of Partnership}.png'
    },
     {
         'id': 'E-002',
@@ -37,7 +37,7 @@ cards = [
         'type': 'Event',
         'turn': 2,
         'Set': 'Base Set',
-        'image': 'img\E-002 - Tina'
+        'image': 'img\E-002 - Tina.png'
     }
 ]
 
