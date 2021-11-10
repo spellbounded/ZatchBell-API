@@ -63,4 +63,17 @@ def api_id():
                 if card['id'] == id:
                         results.append(card)
 
+@app.route('/api/v1/resources/cards', methods=['GET'])
+def api_rarity():
+        if 'rarity' in request.args:
+                rarity = request.args['rarity']
+        else:
+                return "Error. No rarity field provided. Please specify an rarity."
+
+        results = []
+        for card in cards:
+                if card['rarity'] == rarity:
+                        results.append(card)
+
+
 app.run()
