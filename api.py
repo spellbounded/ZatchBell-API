@@ -25,10 +25,20 @@ cards = [
         'title': 'Laila {Bounds of Partnership}',
         'rarity': 'SR',
         'description':'[1MP] Neither player can send their in-play PARTNER cards to the Discard Pile during this tur>        'type': 'Mamodo',
-        'turn': None,
+        'turn': None
         'Set': 'Dawn of the Ancients',
         'image': 'img\M-107 - Laila {Bounds of Partnership}'
-   }
+   },
+    {
+        'id': 'E-002',
+        'title': 'Tina',
+        'rarity': 'C',
+        'description': 'Both players cannot play any SPELL cards until your opponents next END PHASE',
+        'type': 'Event',
+        'turn': 2,
+        'Set': 'Base Set',
+        'image': 'img\E-002 - Tina'
+    }
 ]
 
 
