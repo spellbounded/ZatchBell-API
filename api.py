@@ -17,7 +17,7 @@ cards = [
         'description':'Add 3000 Power to 1 of your MAMODO cards of your choice during your opponents next turn.',
         'type': 'Event',
         'turn': '3',
-        'Set': 'Base Set',
+        'set': 'Base Set',
         'image': 'img\E-001 - The Will to Protect.png'
    },
    {
@@ -26,7 +26,7 @@ cards = [
         'rarity': 'SR',
         'description':'[1MP] Neither player can send their in-play PARTNER cards to the Discard Pile during this tur>        'type': 'Mamodo',
         'turn': None
-        'Set': 'Dawn of the Ancients',
+        'set': 'Dawn of the Ancients',
         'image': 'img\M-107 - Laila {Bounds of Partnership}.png'
    },
     {
@@ -36,7 +36,7 @@ cards = [
         'description': 'Both players cannot play any SPELL cards until your opponents next END PHASE',
         'type': 'Event',
         'turn': 2,
-        'Set': 'Base Set',
+        'set': 'Base Set',
         'image': 'img\E-002 - Tina.png'
     }
 ]
@@ -52,28 +52,58 @@ def api_all():
         return  jsonify(cards)
 
 @app.route('/api/v1/resources/cards', methods=['GET'])
-def api_id():
-        if 'id' in request.args:
-                id = request.args['id']
-        else:
-                return "Error. No id field provided. Please specify an id."
+def api_filter():
+    query_parameters = request.args
 
-        results = []
-        for card in cards:
-                if card['id'] == id:
-                        results.append(card)
+    id = query_parameters.get('id')
+    title = query_parameters.get('title')
+    rarity = query_parameters.get('rarity')
+    description = query_parameters.get('description')
+    type= query_parameters.get('type')
+    turn = query_parameters.get('turn')
+    set = query_parameters.get('set')
+    author = query_parameters.get('author')
+    image= query_parameters.get('image')
 
-@app.route('/api/v1/resources/cards', methods=['GET'])
-def api_rarity():
-        if 'rarity' in request.args:
-                rarity = request.args['rarity']
-        else:
-                return "Error. No rarity field provided. Please specify an rarity."
+    query = "SELECT * FROM books WHERE"
+    to_filter = []
 
-        results = []
-        for card in cards:
-                if card['rarity'] == rarity:
-                        results.append(card)
+    if id:
+        query += ' id=? AND'
+        to_filter.append(id)
+    if title:
+        query += ' title=? AND'
+        to_filter.append(title)
+    if rarity:
+        query += ' rarity=? AND'
+        to_filter.append(rarity)
+    if description:
+        query += ' description=? AND'
+        to_filter.append(description)
+    if type:
+        query += ' type=? AND'
+        to_filter.append(type)
+    if turn:
+        query += ' turn=? AND'
+        to_filter.append(turn)
+    if set:
+        query += ' set=? AND'
+        to_filter.append(set)
+    if image:
+        query += ' image=? AND'
+        to_filter.append(image)
+    if not (id or title or rarity or description or type or turn or set or image):
+        return page_not_found(404)
+
+    query = query[:-4] + ';'
+
+    conn = sqlite3.connect('books.db')
+    conn.row_factory = dict_factory
+    cur = conn.cursor()
+
+    results = cur.execute(query, to_filter).fetchall()
+
+    return jsonify(results)
 
 
 app.run()
